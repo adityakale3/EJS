@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <center>
+        <%= message %>
+
+        <form method="post" action="/login">
+            <p><input type="text" name="username"> <% if(locals.error){if(error.username){ %> <font style="color:red;font-size: 10px;"> <%= error.username.msg %> <% }} %></font></p>
+            <p><input type="password" name="password"> <% if(locals.error){if(error.password){ %> <font style="color:red;font-size: 10px;"> <%= error.password.msg %> <% }} %></font></p>
+            <input type="submit" name="submit" value="submit">
+        </form>
+
+    </center>    
+</body>
+</html>
