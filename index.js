@@ -3,7 +3,7 @@ const bodyParser = require ("body-parser");
 // Express validator 
 // https://express-validator.github.io/docs/
 const { check, validationResult } = require('express-validator');
-
+const { matchedData , sanitizedBody } = require('express-validator/filter');
 const app = express();
 
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
@@ -23,6 +23,10 @@ app.get('/login', (req,res) => {
     res.render('login',{title:"EJS Login Form", message:"Please login"});
 });
 
+app.get('/login', (req,res) => {
+  res.render('login',{title:"EJS Login Form", message:"Please login"});
+});
+
 
 
 // EXPRESS VALIDATOR
@@ -40,7 +44,8 @@ app.post('/login',urlencodedParser, [
     if (!errors.isEmpty()) {
         res.render('login',{title:"Login", message: `Error during Login`, error:errors.mapped()});         
       }else{
-        res.render('welcome',{title:"Welcome " + req.body.username, message: `Welcome ${req.body.username}, your password is ${req.body.password}`});
+        const user = matchedData(req); 
+        res.render('welcome',{title:"Welcome " + req.body.username, message: `Welcome ${req.body.username}, your password is ${req.body.password}`,user:user});
       }
 
 });
